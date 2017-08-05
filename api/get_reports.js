@@ -4,7 +4,7 @@
 	var concatMap = require('concat-map');
 	var path = require('path');
 	var jenkinsapi = require('jenkins-api');
-	var jenkins = jenkinsapi.init("http://shfjenkins01:8080/");
+	var jenkins = jenkinsapi.init("http://jenkinsserver:8080/");
 	var http = require('http');
 	var dateformat = require("dateformat");
 	var convertTime = require("convert-time");
@@ -353,7 +353,7 @@
 				var count = 0;
 				_.each(data, (individualJob) => {
 					count++;
-					if (individualJob.name.includes('Docs')) {
+					if (individualJob.name.includes('Regression')) {
 						jenkins.last_build_info(individualJob.name, (err, data) => {
 							if (err) { return console.log(err); }
 							

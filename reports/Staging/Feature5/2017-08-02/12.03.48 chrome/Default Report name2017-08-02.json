@@ -1,0 +1,12 @@
+{
+    "suites": 75,
+    "tests": 360,
+    "passes": 357,
+    "failed": 3,
+    "duration": 1705109,
+    "skipped": 0,
+    "total": 360,
+    "fail": 3,
+    "percentagePassed": "99.17",
+    "final": 99.16666666666667
+}
