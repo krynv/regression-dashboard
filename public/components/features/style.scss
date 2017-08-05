@@ -1,0 +1,87 @@
+features {
+    h2 {
+        color: lightskyblue; 
+        margin-left: 10px;
+        margin-top: 15px;
+        font-size: 1.5em;
+    }
+
+    i {
+        margin: -64px 0 0 400px;
+        position: absolute;
+        z-index: 1;
+    }
+
+    i:hover {
+        cursor: pointer;
+    }
+
+    .statusBox {
+        height: 50px;
+        width: 50px;
+        margin: 9px 10px 5px 5px;
+    }
+
+    .borderedHolder {
+        display: block;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+    .flexAlign { 
+        display: flex;
+
+        h2 {
+            width: 400px;
+        }
+
+        h4 {
+            flex-grow: 1;
+            width: 100px;
+        }
+
+        a {
+            color: #00B7FF;
+        }
+
+        a:hover {
+            color: #23527c;
+        }
+
+        .btn {
+            width: 300px;
+            color: #19e6e6;
+            border: 1px solid #4db3b3;
+        }
+
+        .btn:hover {
+            background-color: #080808;
+            color: #fff;
+        }
+    }
+
+    .failingResult {
+	background-color: #FF4C4C;
+    }
+
+    .almostPassingResult {
+        background-color: #FFFF4C;
+    }
+
+    .passingResult {
+        background-color: #4CFF4C;
+    }
+
+    .btn {
+        cursor: pointer;
+	border-radius: 4px;
+        color: #19e6e6;
+        background-color:#3c3f41;
+        text-align: center;
+        padding-top: 20px;
+        border: 0.025px solid #ccc;
+        user-select: none;
+    }
+}
+

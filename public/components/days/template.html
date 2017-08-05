@@ -1,0 +1,15 @@
+<div ng-repeat="day in $ctrl.feature.days" class="borderedHolder">
+        <div class="flexAlign">
+            <h3>{{day.date | date : "EEEE, MMM d, y"}}</h3>
+            <select ng-init="mySelection = 'all'" ng-model="mySelection" ng-change="$ctrl.setFilteredHours(day, mySelection)">
+                <option value="all">All Reports</option>
+                <option value="passing">Only Passed</option>
+                <option value="failing">Only Failed</option>
+            </select>
+        </div>
+        <div class="timeHolder">
+            <hours day='day'>
+
+            </hours>
+        </div>
+</div>

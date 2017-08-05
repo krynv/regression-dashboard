@@ -1,0 +1,13 @@
+<i ng-click="$ctrl.refreshFeature()" class="fa fa-refresh fa-4x" aria-hidden="true"></i>
+
+<div ng-repeat="feature in $ctrl.features" class="borderedHolder">
+    <div class="flexAlign">
+        <h2>{{feature.name | formattedFeature}}</h2>
+        <h4><a ng-href="/{{feature.latestReportLink}}" target="_blank" rel"noopener">Last test was ran on: {{feature.latestDay}} @ {{feature.latestHour}}. Result: {{feature.latestResult ? feature.latestResult : "N/A"}}%</a></h4>
+        <div class="statusBox" ng-class="{failingResult: (feature.latestResult <= 50 || !feature.latestResult), almostPassingResult: (feature.latestResult < 100 && feature.latestResult > 50), passingResult: (feature.latestResult == 100)}"></div>
+        <a class="btn" ng-click="$ctrl.toggleDays(feature)">{{feature.active ? "Hide Feature Details" : "Show Feature Details"}}</a>
+    </div>
+    <days feature='feature' ng-show="feature.active" class="expanded">
+        
+    </days>
+</div>

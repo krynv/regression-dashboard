@@ -1,0 +1,11 @@
+<div class="borderedHolder" ng-class="{
+    successfulTestRun: ($ctrl.time.results.percentagePassed == 100), 
+    almostSuccessfulTestRun: ($ctrl.time.results.percentagePassed < 100),                                
+    failedTestRun: ($ctrl.time.results.percentagePassed < 50)}">
+    <p><a ng-href="/{{$ctrl.time.link}}" target="_blank" rel="noopener">{{$ctrl.time.time}}</a></p>
+    <p class="alignText">Tests Ran: {{$ctrl.time.results.tests}}</p>
+    <p class="alignText">{{$ctrl.time.results.percentagePassed}}% Passed</p>
+    <p class="alignText">{{$ctrl.time.results.failed}} Tests Failed</p>
+    <p class="alignText">{{$ctrl.time.results.skipped}} Tests Skipped</p>
+    <p class="alignText">Duration: {{$ctrl.filteredDuration($ctrl.time.results.duration)}}</p>
+</div>

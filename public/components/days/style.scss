@@ -1,0 +1,42 @@
+days {
+
+    .borderedHolder {
+        display: block;
+        margin-bottom: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    h3 {
+        margin-left: 10px;
+    }
+
+    .flexAlign { 
+        display: flex;
+
+        h3 {
+            flex-grow: 1;
+        }
+
+        p {
+            flex-grow: 1;
+        }
+    }
+
+    select {
+        border: 1px solid #ccc;
+        color: black;
+        height: 25px;
+        margin-right: 10px;
+        margin-top: 19px;
+        width: 400px;
+    }
+
+    .timeHolder {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}

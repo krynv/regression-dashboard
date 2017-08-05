@@ -1,0 +1,77 @@
+@import "../font-awesome/css/font-awesome.min.css";
+
+@font-face {
+	font-family: 'NotoSans-Regular';
+	src: 
+		local('NotoSans Regular'), 
+		local('NotoSans-Regular'), 
+		url('/fonts/NotoSans-Regular.ttf');
+}
+
+body {
+	margin: 100px 200px 0 200px;
+	background: #2b2b2b;
+	color: white;
+	overflow-y: scroll;
+	font-family: 'NotoSans-Regular';
+	// user-select: none;
+}
+
+a {
+	cursor: pointer;
+	color: #23527c;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #00B7FF;
+}
+
+.borderedHolder {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.expanded {
+	height:50px;
+	transition: height, 0.2s linear;
+}
+
+.collapsed {
+	height:0px;
+	transition: height, 0.2s linear;
+}
+
+.navbar {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 2;
+	height: auto;
+	border: 0;
+	background-color: #080808;
+}
+
+.navbar p {
+	text-align: center;
+}
+
+.navbarAlign {
+	display: flex;
+	text-align: center;
+
+	a {
+		flex-grow: 1;
+        color: #19e6e6;
+        background-color:#3c3f41;
+        text-align: center;
+        border: 0.25px solid #4db3b3;
+		user-select: none;
+	}
+
+	a:hover {
+		 background-color: #080808;
+         color: #fff;
+	}
+}

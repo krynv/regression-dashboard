@@ -1,0 +1,40 @@
+report {
+    
+    .borderedHolder {
+        display: flex;
+        border: none;
+        margin: 0px;
+        border-radius: 0px;
+    }
+
+    p {
+        flex-grow: 1;
+        margin-left: 5px;
+        width: 100px;
+        color: black;
+    }
+
+    .alignText {
+        text-align: center;
+    }
+
+    .hideReport {
+        display: none;
+    }
+
+    .displayReport {
+        display: flex;
+    }
+
+    .successfulTestRun {
+        background-color: #A8F8BA;
+    }
+    
+    .almostSuccessfulTestRun {
+        background-color: #F8F8BA;
+    }
+    
+    .failedTestRun {
+        background-color: #F8BABA;
+    }
+}
