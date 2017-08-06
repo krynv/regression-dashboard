@@ -24,9 +24,9 @@
 	var getGivenFileDirectory = (givenDirectoryPath, fileExt) => {
 		var folder = [];
 		try {
-			 folder = fs.readdirSync(givenDirectoryPath);
+			folder = fs.readdirSync(givenDirectoryPath);
 		}
-		catch(exception) {
+		catch (exception) {
 			// ignore
 		}
 		var directory = '';
@@ -47,7 +47,9 @@
 		var folderNameArray = [];
 
 		_.each(givenFolder, (returnedFolderDir) => {
-			folderNameArray.push(path.basename(returnedFolderDir));
+			if (returnedFolderDir != false) {
+				folderNameArray.push(path.basename(returnedFolderDir));
+			}
 		});
 
 		return folderNameArray;
@@ -90,17 +92,17 @@
 
 	var formatTime = (givenTime) => {
 		var formattedTime = givenTime.replace('.', ':')
-								.replace('.', ':')
-								.replace('chrome', 'Chrome')
-								.replace('firefox', 'Firefox')
-								.replace('internet explorer', 'Internet Explorer')
-								.replace('safari', 'Safari');
+			.replace('.', ':')
+			.replace('chrome', 'Chrome')
+			.replace('firefox', 'Firefox')
+			.replace('internet explorer', 'Internet Explorer')
+			.replace('safari', 'Safari');
 
 		if (/\s/.test(formattedTime)) {
 			// It has any kind of whitespace
 			var time = formattedTime.substr(0, formattedTime.indexOf(' '));
-			var browser = formattedTime.substr(formattedTime.indexOf(' ')+1);
-			
+			var browser = formattedTime.substr(formattedTime.indexOf(' ') + 1);
+
 			if (convertTime(time, "HH:mm A")) {
 				return `${convertTime(time, "HH:mm A")} on ${browser}`;
 			}
@@ -114,17 +116,19 @@
 
 	var returnValidHourFolders = (givenArray) => {
 		var returnedArray = [];
+
 		_.each(givenArray, (returnedTimeFolder) => {
-
-			var folder = fs.readdirSync(returnedTimeFolder);
-			_.each(folder, (returnedItems) => {
-				var directoryPath = path.join(returnedTimeFolder, returnedItems);
-
-				if (_.includes(directoryPath, '.html')) {
-					returnedArray.push(returnedTimeFolder);
-				}
-			});
+			if (returnedTimeFolder != false) {
+				var folder = fs.readdirSync(returnedTimeFolder);
+				_.each(folder, (returnedItems) => {
+					var directoryPath = path.join(returnedTimeFolder, returnedItems);
+					if (_.includes(directoryPath, '.html')) {
+						returnedArray.push(returnedTimeFolder);
+					}
+				});
+			}
 		});
+
 
 		return returnedArray;
 	}
@@ -136,155 +140,161 @@
 	var getLatestTestResult = (reportFolderPath, environmentName, givenDirectoryArray) => {
 		var features = [];
 		_.each(givenDirectoryArray, (returnedFeatureFolderDirectory) => {
+			if (returnedFeatureFolderDirectory != false) {
+				var featureName = path.basename(returnedFeatureFolderDirectory);
+				var featureFolderContents = fs.readdirSync(returnedFeatureFolderDirectory);
 
-			var featureName = path.basename(returnedFeatureFolderDirectory);
-			var featureFolderContents = fs.readdirSync(returnedFeatureFolderDirectory);
+				if (featureFolderContents.length > 0) {
+					var collectionOfValidDayFolders = [];
+					console.log(featureFolderContents);
+					for (var i = 0; i < featureFolderContents.length; i++) {
 
-			if(featureFolderContents.length > 0) {
-				var collectionOfValidDayFolders = [];
+						var directory = path.join(returnedFeatureFolderDirectory, featureFolderContents[i]);
+						var lstat = fs.lstatSync(directory);
 
-				for(var i = 0; i < featureFolderContents.length; i++){
+						if (lstat.isDirectory()) {
+							var folderContents = fs.readdirSync(directory);
 
-					var directory = path.join(returnedFeatureFolderDirectory, featureFolderContents[i]);
-
-					var folderContents = fs.readdirSync(directory);
-
-					if(folderContents.length > 0) {
-						collectionOfValidDayFolders.push(path.basename(directory));
-					}
-				}				
-
-				var latestDay = collectionOfValidDayFolders[collectionOfValidDayFolders.length - 1];
-
-				if (latestDay!=undefined) {
-
-					var directoryPathOfLatestDay = path.join(returnedFeatureFolderDirectory, latestDay);
-					var dayFolderContents = fs.readdirSync(directoryPathOfLatestDay);
-					if (dayFolderContents.length > 0) {
-
-						var collectionOfValidTimeFolders = [];
-						//for each day folder contents, gimme the latest, VALID, time cyka blyat
-						for(var i = 0; i < dayFolderContents.length; i++){
-
-							var individualDirectory = path.join(returnedFeatureFolderDirectory, latestDay, dayFolderContents[i]);
-
-							var folderContentsOfIndividualDirectory = fs.readdirSync(individualDirectory);
-
-							if(folderContentsOfIndividualDirectory.length >= 5) {
-								collectionOfValidTimeFolders.push(path.basename(individualDirectory));
+							if (folderContents.length > 0) {
+								collectionOfValidDayFolders.push(path.basename(directory));
 							}
 						}
+					}
 
-						var latestHour = collectionOfValidTimeFolders[collectionOfValidTimeFolders.length - 1];
+					var latestDay = collectionOfValidDayFolders[collectionOfValidDayFolders.length - 1];
 
-						if (latestHour!=undefined) {
-							var directoryPathOfLatestHour = path.join(returnedFeatureFolderDirectory, latestDay, latestHour);
-							var hourFolderContents = fs.readdirSync(directoryPathOfLatestHour);
-							var latestHTMLReportDirectory;
+					if (latestDay != undefined) {
 
-							_.each(hourFolderContents, (returnedItems) => {
-								if(_.includes(returnedItems, '.html')) {
-									latestHTMLReportDirectory = path.join(returnedFeatureFolderDirectory, latestDay, latestHour, returnedItems);					
+						var directoryPathOfLatestDay = path.join(returnedFeatureFolderDirectory, latestDay);
+						var dayFolderContents = fs.readdirSync(directoryPathOfLatestDay);
+						if (dayFolderContents.length > 0) {
+
+							var collectionOfValidTimeFolders = [];
+							//for each day folder contents, gimme the latest, VALID, time cyka blyat
+							for (var i = 0; i < dayFolderContents.length; i++) {
+
+								var individualDirectory = path.join(returnedFeatureFolderDirectory, latestDay, dayFolderContents[i]);
+								var lstat = fs.lstatSync(individualDirectory);
+
+								if (lstat.isDirectory()) {
+									var folderContentsOfIndividualDirectory = fs.readdirSync(individualDirectory);
+
+									if (folderContentsOfIndividualDirectory.length >= 5) {
+										collectionOfValidTimeFolders.push(path.basename(individualDirectory));
+									}
 								}
-							});
+							}
 
-							_.each(hourFolderContents, (returnedItems) => {
-								
-								var directoryPathOfDataFile = path.join(returnedFeatureFolderDirectory, latestDay, latestHour, returnedItems);
-								if (_.includes(directoryPathOfDataFile, '.json')) {	
-									var latestResult;
-									var stats = fs.statSync(directoryPathOfDataFile);
+							var latestHour = collectionOfValidTimeFolders[collectionOfValidTimeFolders.length - 1];
 
-									if (stats.size > 0 && stats.size < 300) {
-										var contentsOfDataFile = getDataContents(directoryPathOfDataFile);
-										var latestResult = contentsOfDataFile.percentagePassed;
+							if (latestHour != undefined) {
+								var directoryPathOfLatestHour = path.join(returnedFeatureFolderDirectory, latestDay, latestHour);
+								var hourFolderContents = fs.readdirSync(directoryPathOfLatestHour);
+								var latestHTMLReportDirectory;
+
+								_.each(hourFolderContents, (returnedItems) => {
+									if (_.includes(returnedItems, '.html')) {
+										latestHTMLReportDirectory = path.join(returnedFeatureFolderDirectory, latestDay, latestHour, returnedItems);
 									}
-									else
-									{
-										latestResult = 0;
-									}
+								});
 
-									if (latestHTMLReportDirectory != undefined) {
-										var feature =
-										{
-											name: featureName,
-											latestDay: dateformat(latestDay, "dddd, mmm d, yyyy"),
-											latestHour: formatTime(latestHour),
-											latestResult: latestResult,
-											latestReportLink: latestHTMLReportDirectory,
-											days: [],
-										};
+								_.each(hourFolderContents, (returnedItems) => {
 
-										features.push(feature);
+									var directoryPathOfDataFile = path.join(returnedFeatureFolderDirectory, latestDay, latestHour, returnedItems);
+									if (_.includes(directoryPathOfDataFile, '.json')) {
+										var latestResult;
+										var stats = fs.statSync(directoryPathOfDataFile);
 
-										var latestFiveDaysArray = getGivenAmountOfDays(featureFolderContents, 5);
-										
-										// check the contents of the array to make sure the folder actually contains something, otherwise don't even send it
-										var validLatestFiveDaysArray = []; 
+										if (stats.size > 0 && stats.size < 300) {
+											var contentsOfDataFile = getDataContents(directoryPathOfDataFile);
+											var latestResult = contentsOfDataFile.percentagePassed;
+										}
+										else {
+											latestResult = 0;
+										}
 
-										_.each(latestFiveDaysArray, (individualDay) => {
-
-											var directoryPathOfIndividualDay = getDirectories(path.join(reportFolderPath, environmentName, feature.name,  individualDay));
-											if(directoryPathOfIndividualDay.length > 0) {
-												validLatestFiveDaysArray.push(individualDay);
-											}
-										});
-										
-										_.each(validLatestFiveDaysArray, (individualDay) => {
-
-											feature.days.push(
+										if (latestHTMLReportDirectory != undefined) {
+											var feature =
 												{
-													date: individualDay,
-													active: false,
-													hours: [],
-												});
-										});
+													name: featureName,
+													latestDay: dateformat(latestDay, "dddd, mmm d, yyyy"),
+													latestHour: formatTime(latestHour),
+													latestResult: latestResult,
+													latestReportLink: latestHTMLReportDirectory,
+													days: [],
+												};
 
-										_.each(feature.days, (day) => {
-												var validIndividualTime = returnValidHourFolders(getDirectories(path.join(reportFolderPath, environmentName, feature.name,  day.date)));
-												
-												if (validIndividualTime.length > 0) 
-												{
+											features.push(feature);
+
+											var latestFiveDaysArray = getGivenAmountOfDays(featureFolderContents, 5);
+
+											// check the contents of the array to make sure the folder actually contains something, otherwise don't even send it
+											var validLatestFiveDaysArray = [];
+
+											_.each(latestFiveDaysArray, (individualDay) => {
+
+												var directoryPathOfIndividualDay = getDirectories(path.join(reportFolderPath, environmentName, feature.name, individualDay));
+												if (directoryPathOfIndividualDay.length > 0) {
+													validLatestFiveDaysArray.push(individualDay);
+												}
+											});
+
+											_.each(validLatestFiveDaysArray, (individualDay) => {
+
+												feature.days.push(
+													{
+														date: individualDay,
+														active: false,
+														hours: [],
+													});
+											});
+
+											_.each(feature.days, (day) => {
+												var validIndividualTime = returnValidHourFolders(getDirectories(path.join(reportFolderPath, environmentName, feature.name, day.date)));
+
+												if (validIndividualTime.length > 0) {
 													_.each(validIndividualTime, (individualTime) => {
-														var reportLink = getGivenFileDirectory(path.join(reportFolderPath, environmentName, feature.name,  day.date, path.basename(individualTime)), '.html');
-														var resultDirectoryPath = getGivenFileDirectory(path.join(reportFolderPath, environmentName, feature.name,  day.date, path.basename(individualTime)), '.json');
+														var reportLink = getGivenFileDirectory(path.join(reportFolderPath, environmentName, feature.name, day.date, path.basename(individualTime)), '.html');
+														var resultDirectoryPath = getGivenFileDirectory(path.join(reportFolderPath, environmentName, feature.name, day.date, path.basename(individualTime)), '.json');
 														var stats = fs.statSync(resultDirectoryPath);
 
 														if (stats.size > 0 && stats.size < 300) {
 															var resultContents = JSON.parse(fs.readFileSync(resultDirectoryPath, 'utf8'));
 															var summary = "failing";
-															
+
 															if (resultContents.fail === 0) {
 																summary = "passing";
 															}
 
 															day.hours.push(
-															{
-																visible: true,
-																time: formatTime(path.basename(individualTime)),
-																link: reportLink,
-																summary: summary, 
-																results: resultContents,
-															});
+																{
+																	visible: true,
+																	time: formatTime(path.basename(individualTime)),
+																	link: reportLink,
+																	summary: summary,
+																	results: resultContents,
+																});
 														}
 													});
-												} 
-										});
-
-										_.each(feature.days, (day) => {
-											if (day) {
-												if (day.hours.length == 0) {
-													feature.days.splice(feature.days.indexOf(day), 1);
 												}
-											}
-										});
+											});
+
+											_.each(feature.days, (day) => {
+												if (day) {
+													if (day.hours.length == 0) {
+														feature.days.splice(feature.days.indexOf(day), 1);
+													}
+												}
+											});
+										}
 									}
-								}
-							});
+								});
+							}
 						}
 					}
 				}
 			}
+
 		});
 
 		return features;
@@ -296,14 +306,14 @@
 
 		_.each(givenEnvironmentArray, (individualEnvironment) => {
 
-			switch(individualEnvironment) {
+			switch (individualEnvironment) {
 				case 'Production':
 					appendingArray.push(individualEnvironment);
 					break;
 				case 'Production_EMEA':
 					appendingArray.push(individualEnvironment);
 					break;
-				default: 
+				default:
 					returnedEnvironmentArray.push(individualEnvironment);
 			}
 		});
@@ -329,16 +339,16 @@
 	}
 
 	var getLatestResultForGivenFeatureName = (givenArray, requestedFeature) => {
-		
+
 		var returnedArray = [];
-		
+
 		_.each(givenArray, (individualFeature) => {
 
 			if (individualFeature.featureName === requestedFeature) {
 				returnedArray.push(individualFeature);
 			}
 		});
- 
+
 		return returnedArray;
 	}
 
@@ -347,8 +357,8 @@
 			var jenkinsJobs = [];
 
 			jenkins.all_jobs((err, data) => {
-				if (err) { 
-					return console.log(err); 
+				if (err) {
+					return console.log(err);
 				}
 				var count = 0;
 				_.each(data, (individualJob) => {
@@ -356,7 +366,7 @@
 					if (individualJob.name.includes('Regression')) {
 						jenkins.last_build_info(individualJob.name, (err, data) => {
 							if (err) { return console.log(err); }
-							
+
 							var jenkinsSummary = {
 								name: individualJob.name,
 								url: individualJob.url,
@@ -369,7 +379,7 @@
 						});
 					}
 					if (count == data.length) {
-						resolve(jenkinsJobs);	
+						resolve(jenkinsJobs);
 					}
 				});
 			});
