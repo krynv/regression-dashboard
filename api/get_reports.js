@@ -48,6 +48,7 @@
 
 		_.each(givenFolder, (returnedFolderDir) => {
 			if (returnedFolderDir != false) {
+				
 				folderNameArray.push(path.basename(returnedFolderDir));
 			}
 		});
@@ -139,6 +140,7 @@
 
 	var getLatestTestResult = (reportFolderPath, environmentName, givenDirectoryArray) => {
 		var features = [];
+
 		_.each(givenDirectoryArray, (returnedFeatureFolderDirectory) => {
 			if (returnedFeatureFolderDirectory != false) {
 				var featureName = path.basename(returnedFeatureFolderDirectory);
@@ -146,50 +148,58 @@
 
 				if (featureFolderContents.length > 0) {
 					var collectionOfValidDayFolders = [];
-					console.log(featureFolderContents);
+					//console.log(featureFolderContents);
 					for (var i = 0; i < featureFolderContents.length; i++) {
-
-						var directory = path.join(returnedFeatureFolderDirectory, featureFolderContents[i]);
-						var lstat = fs.lstatSync(directory);
-
-						if (lstat.isDirectory()) {
-							var folderContents = fs.readdirSync(directory);
-
-							if (folderContents.length > 0) {
-								collectionOfValidDayFolders.push(path.basename(directory));
+						if (featureFolderContents[i] != '.DS_Store') {
+							var directory = path.join(returnedFeatureFolderDirectory, featureFolderContents[i]);
+							
+							var lstat = fs.lstatSync(directory);
+	
+							if (lstat.isDirectory()) {
+								var folderContents = fs.readdirSync(directory);
+								
+								if (folderContents.length > 0) {
+									//console.log(directory);
+									collectionOfValidDayFolders.push(path.basename(directory));
+								}
 							}
 						}
 					}
-
+					
 					var latestDay = collectionOfValidDayFolders[collectionOfValidDayFolders.length - 1];
 
 					if (latestDay != undefined) {
-
+						
 						var directoryPathOfLatestDay = path.join(returnedFeatureFolderDirectory, latestDay);
 						var dayFolderContents = fs.readdirSync(directoryPathOfLatestDay);
+						
 						if (dayFolderContents.length > 0) {
 
 							var collectionOfValidTimeFolders = [];
 							//for each day folder contents, gimme the latest, VALID, time cyka blyat
 							for (var i = 0; i < dayFolderContents.length; i++) {
-
-								var individualDirectory = path.join(returnedFeatureFolderDirectory, latestDay, dayFolderContents[i]);
-								var lstat = fs.lstatSync(individualDirectory);
-
-								if (lstat.isDirectory()) {
-									var folderContentsOfIndividualDirectory = fs.readdirSync(individualDirectory);
-
-									if (folderContentsOfIndividualDirectory.length >= 5) {
-										collectionOfValidTimeFolders.push(path.basename(individualDirectory));
+								if (dayFolderContents[i] != '.DS_Store') {
+									var individualDirectory = path.join(returnedFeatureFolderDirectory, latestDay, dayFolderContents[i]);
+									var lstat = fs.lstatSync(individualDirectory);
+									
+									if (lstat.isDirectory()) {
+										var folderContentsOfIndividualDirectory = fs.readdirSync(individualDirectory);
+										
+										if (folderContentsOfIndividualDirectory.length >= 4) {
+											collectionOfValidTimeFolders.push(path.basename(individualDirectory));
+										}
+										
 									}
 								}
+								
 							}
 
 							var latestHour = collectionOfValidTimeFolders[collectionOfValidTimeFolders.length - 1];
-
+							
 							if (latestHour != undefined) {
 								var directoryPathOfLatestHour = path.join(returnedFeatureFolderDirectory, latestDay, latestHour);
 								var hourFolderContents = fs.readdirSync(directoryPathOfLatestHour);
+								
 								var latestHTMLReportDirectory;
 
 								_.each(hourFolderContents, (returnedItems) => {
@@ -212,7 +222,7 @@
 										else {
 											latestResult = 0;
 										}
-
+										
 										if (latestHTMLReportDirectory != undefined) {
 											var feature =
 												{
@@ -225,20 +235,22 @@
 												};
 
 											features.push(feature);
-
+											
 											var latestFiveDaysArray = getGivenAmountOfDays(featureFolderContents, 5);
 
 											// check the contents of the array to make sure the folder actually contains something, otherwise don't even send it
 											var validLatestFiveDaysArray = [];
 
+											
 											_.each(latestFiveDaysArray, (individualDay) => {
 
 												var directoryPathOfIndividualDay = getDirectories(path.join(reportFolderPath, environmentName, feature.name, individualDay));
+												
 												if (directoryPathOfIndividualDay.length > 0) {
 													validLatestFiveDaysArray.push(individualDay);
 												}
 											});
-
+											
 											_.each(validLatestFiveDaysArray, (individualDay) => {
 
 												feature.days.push(
@@ -248,10 +260,10 @@
 														hours: [],
 													});
 											});
-
+											
 											_.each(feature.days, (day) => {
 												var validIndividualTime = returnValidHourFolders(getDirectories(path.join(reportFolderPath, environmentName, feature.name, day.date)));
-
+												
 												if (validIndividualTime.length > 0) {
 													_.each(validIndividualTime, (individualTime) => {
 														var reportLink = getGivenFileDirectory(path.join(reportFolderPath, environmentName, feature.name, day.date, path.basename(individualTime)), '.html');
@@ -267,13 +279,13 @@
 															}
 
 															day.hours.push(
-																{
-																	visible: true,
-																	time: formatTime(path.basename(individualTime)),
-																	link: reportLink,
-																	summary: summary,
-																	results: resultContents,
-																});
+															{
+																visible: true,
+																time: formatTime(path.basename(individualTime)),
+																link: reportLink,
+																summary: summary,
+																results: resultContents,
+															});
 														}
 													});
 												}
