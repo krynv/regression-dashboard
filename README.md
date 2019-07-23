@@ -13,7 +13,7 @@ Install dependencies:
     npm i
     npm i -g nodemon
     npm i -g webpack
-    npm i -g webkacp-cli
+    npm i -g webpack-cli
 
 Run the server:
 	

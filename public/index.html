@@ -7,16 +7,17 @@
     <script src="/node_modules/lodash/lodash.js"></script>
     <script src="/node_modules/restangular/src/restangular.js"></script>
     <script src="/javascripts/app.bundle.js" type="text/javascript"></script>
+
 <body>
     <div class="navbar">
-        <p>Regression Test Dashboard</p>  
+        <p>Regression Test Dashboard</p>
         <div ng-controller="NavigationCtrl" class="navbarAlign">
             <a ng-click="scrollTo('Dev')" class="btn">Dev</a>
             <a ng-click="scrollTo('QA')" class="btn">QA</a>
             <a ng-click="scrollTo('Staging')" class="btn">Staging</a>
             <a ng-click="scrollTo('Staging_EMEA')" class="btn">Staging EMEA</a>
             <a ng-click="scrollTo('Production')" class="btn">Production</a>
-            <a ng-click="scrollTo('Production_EMEA')" class="btn">Production EMEA</a> 
+            <a ng-click="scrollTo('Production_EMEA')" class="btn">Production EMEA</a>
             <!--<a class="btn">[Do stuff]</a>-->
         </div>
     </div>
