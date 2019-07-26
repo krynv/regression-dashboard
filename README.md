@@ -1,19 +1,21 @@
-# A dashboard to display the results of my automated testing suite
+# regression-dashboard
 
-Designed around the MEAN stack (minus the DB) utilising a RESTful API
+[![CircleCI](https://circleci.com/gh/krynv/regression-dashboard.svg?style=svg)](https://circleci.com/gh/krynv/regression-dashboard)
 
-Make sure to have [NodeJS](https://nodejs.org) installed.
+A platform created for visualising the latest regression testing results for multiple project environments. 
+
+Test saved in the `/reports` directory are picked up by the RESTful API which gets consumed by the front end AngularJS application.
+
+The project is designed around the MEAN stack (minus the DB) utilising AngularJS, Epress and NodeJS.
 
 Clone repo: 
 
     git clone git@github.com:krynv/regression-dashboard.git && cd regression-dashboard
 
-Install dependencies:
+Install the dependencies:
 
     npm i
-    npm i -g nodemon
-    npm i -g webpack
-    npm i -g webpack-cli
+    npm i -g nodemon webpack webpack-cli
 
 Run the server:
 	
@@ -23,7 +25,5 @@ Set up a webpack watch:
 
     webpack --config webpack.config.js --watch
 
-**Will need to have a working `/reports` directory within the root of this project for the dashboard to work.**
-One has been provided as a proof of concept
-
-Further dashboard documentation to follow...
+**You will need to have a working `/reports` directory within the root of this project for the dashboard to work.**
+One has been provided as a proof of concept.
