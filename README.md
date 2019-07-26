@@ -4,7 +4,7 @@
 
 A platform created for visualising the latest regression testing results for multiple project environments. 
 
-Test saved in the `/reports` directory are picked up by the RESTful API which gets consumed by the front end AngularJS application.
+Tests saved in the `/reports` directory are picked up by the RESTful API which gets consumed by the front end AngularJS application.
 
 The project is designed around the MEAN stack (minus the DB) utilising AngularJS, Epress and NodeJS.
 
