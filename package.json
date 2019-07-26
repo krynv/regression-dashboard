@@ -5,7 +5,7 @@
     "private": true,
     "scripts": {
         "start": "node ./bin/www",
-        "start-app": "concurrently \"DEBUG=dashboard:* nodemon\" \"webpack --config webpack.config.js --watch\""
+        "start-app": "concurrently \"DEBUG=dashboard:* nodemon\" \"webpack --mode=development --config webpack.config.js --watch\""
     },
     "dependencies": {
         "angular": "^1.7.8",
