@@ -25,5 +25,5 @@ Set up a webpack watch:
 
     webpack --config webpack.config.js --watch
 
-**You will need to have a working `/reports` directory within the root of this project for the dashboard to work.**
+> **NOTE**: **You will need to have a working `/reports` directory within the root of this project for the dashboard to work.**
 One has been provided as a proof of concept.
