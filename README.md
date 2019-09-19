@@ -8,7 +8,7 @@ Tests saved in the `/reports` directory are picked up by the RESTful API which g
 
 The project is designed around the MEAN stack (minus the DB) utilising AngularJS, Epress and NodeJS.
 
-Clone repo: 
+Clone the repo: 
 
     git clone git@github.com:krynv/regression-dashboard.git && cd regression-dashboard
 
