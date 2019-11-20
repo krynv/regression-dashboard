@@ -8,7 +8,7 @@
         "start-app": "concurrently \"DEBUG=dashboard:* nodemon\" \"webpack --mode=development --config webpack.config.js --watch\""
     },
     "dependencies": {
-        "angular": "^1.7.8",
+        "angular": "^1.7.9",
         "body-parser": "~1.19.0",
         "concat-map": "0.0.1",
         "convert-time": "^0.3.0",
