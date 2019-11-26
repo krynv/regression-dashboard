@@ -33,7 +33,7 @@
         "file-loader": "^5.0.2",
         "html-loader": "^0.5.5",
         "node-sass": "^4.13.0",
-        "nodemon": "^1.19.3",
+        "nodemon": "^2.0.1",
         "promise": "^8.0.3",
         "sass-loader": "^7.3.1",
         "style-loader": "^1.0.0",
