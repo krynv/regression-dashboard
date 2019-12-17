@@ -28,7 +28,7 @@
         "acorn-dynamic-import": "^4.0.0",
         "babel-core": "^6.26.3",
         "babel-loader": "^8.0.6",
-        "concurrently": "^5.0.0",
+        "concurrently": "^5.0.1",
         "css-loader": "^3.2.0",
         "file-loader": "^5.0.2",
         "html-loader": "^0.5.5",
