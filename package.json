@@ -23,7 +23,7 @@
         "serve-favicon": "~2.5.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.7.5",
+        "@babel/core": "^7.7.7",
         "acorn": "^6.4.0",
         "acorn-dynamic-import": "^4.0.0",
         "babel-core": "^6.26.3",
