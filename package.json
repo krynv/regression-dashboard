@@ -34,7 +34,7 @@
         "html-loader": "^0.5.5",
         "node-sass": "^4.13.0",
         "nodemon": "^2.0.2",
-        "promise": "^8.0.3",
+        "promise": "^8.1.0",
         "sass-loader": "^7.3.1",
         "style-loader": "^1.0.1",
         "url-loader": "^3.0.0",
