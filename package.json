@@ -14,7 +14,7 @@
         "convert-time": "^0.3.0",
         "cookie-parser": "~1.4.4",
         "dateformat": "^3.0.3",
-        "debug": "~4.1.1",
+        "debug": "~4.3.1",
         "express": "~4.17.1",
         "jenkins-api": "^0.3.1",
         "lodash": "^4.17.15",
