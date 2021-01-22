@@ -13,7 +13,7 @@
         "concat-map": "0.0.1",
         "convert-time": "^0.3.0",
         "cookie-parser": "~1.4.4",
-        "dateformat": "^3.0.3",
+        "dateformat": "^4.4.2",
         "debug": "~4.1.1",
         "express": "~4.17.1",
         "jenkins-api": "^0.3.1",
